@@ -2,41 +2,44 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Document</title>
         <script src="../node_modules/react/dist/react.js"></script>
         <script src="../node_modules/react-dom/dist/react-dom.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+        <title>Intro into State</title>
     </head>
     <body>
         <div id="react-container"></div>
 
         <script type="text/babel">
+            var Checkbox = React.createClass({
 
-            var Note = React.createClass({
-
-                edit(){
-                    console.log("Editing Note")
+                getInitialState(){
+                  return {checked: false}
                 },
-
-                remove(){
-                    console.log("Removing Note")
+                handleCheck(){
+                    this.setState({checked: !this.state.checked})
                 },
-
                 render(){
+                    var msg
+                    if (this.state.checked) {
+                        msg = "checked"
+                    } else {
+                        msg = "unchecked"
+                    }
+
                     return (
-                        <div className="note">
-                            <p>{this.props.children}</p>
-                            <span>
-                                <button onClick={this.edit} >Edit</button>
-                                <button onClick={this.remove} >X</button>
-                            </span>
+                        <div>
+                            <input type="checkbox" onChange={this.handleCheck} defaultChecked={this.state.checked}/>
+                            <p>this box is {msg}</p>
                         </div>
                     )
                 }
 
             })
 
-            ReactDOM.render(<Note>Hello World</Note>, document.getElementById('react-container'))
+            ReactDOM.render(<Checkbox/>,
+                document.getElementById('react-container')
+            )
 
         </script>
 
